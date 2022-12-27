@@ -18,7 +18,7 @@ class LoginApi(APIView):
         # if not user.check_password(raw_password=password):
         #     return Response({"status": 400, "message": "Wrong Password"},status=status.HTTP_400_BAD_REQUEST)
         serializer = MyUserSerializer(user)
-        return Response({"message": "User logged in successfully","user_info": serializer.data,"token" : token },status=status.HTTP_200_OK,)
+        return Response({"message": "User logged in successfully","data": serializer.data,"token" : token },status=status.HTTP_200_OK,)
 
 
 # To get Details Of User
@@ -29,6 +29,9 @@ class UserApi(APIView):
         if serializer:
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self,request,*args, **kwargs):
+        pass
 
 class ResetPasswordAPI(APIView):
     def post(self,request,*args, **kwargs) :

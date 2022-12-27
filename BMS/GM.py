@@ -8,8 +8,8 @@ from django.db.models import Q
 class GenericMethods:
     def getall(Model, ModelSerializer):
         try:
-            return Response(
-                ModelSerializer(Model.objects.all(), many=True).data,
+            return Response({"error" : False,"Data":
+                ModelSerializer(Model.objects.all(), many=True).data},
                 status=status.HTTP_200_OK,
                 success=True,
                 
@@ -24,8 +24,8 @@ class GenericMethods:
 
     def getone(Model, ModelSerializer, pk):
         try:
-            return Response(
-                ModelSerializer(Model.objects.get(id=pk)).data,
+            return Response({"error" : False,"data" : 
+                ModelSerializer(Model.objects.get(id=pk)).data},
                 status=status.HTTP_200_OK,
             )
         except Model.DoesNotExist:
@@ -80,13 +80,12 @@ class GenericMethodsMixin:
         filter = {self.lookup: pk}
         if pk == 0:
             try:
-                return Response(
-                    self.serializer(self.model.objects.all(), many=True).data,
+                return Response({"error" : False,"data":self.serializer(self.model.objects.all(), many=True).data},
                     status=status.HTTP_200_OK,
                 )
             except:
                 return Response(
-                    data={
+                    {
                         "Error": str(self.model._meta).split(".")[1]
                         + " object does not exists"
                     },
@@ -94,13 +93,13 @@ class GenericMethodsMixin:
                 )
         else:
             try:
-                return Response(
-                    self.serializer(self.model.objects.get(pk=pk)).data,
+                return Response({"error":False,"data" : 
+                    self.serializer(self.model.objects.get(pk=pk)).data},
                     status=status.HTTP_200_OK,
                 )
             except self.model.DoesNotExist:
                 return Response(
-                    data={
+                   {
                         "Error": str(self.model._meta).split(".")[1]
                         + " object does not exists"
                     },
@@ -112,7 +111,6 @@ class GenericMethodsMixin:
         serializer = self.serializer(data=request.data)
         print(request.data)
         if serializer.is_valid():
-
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         else:

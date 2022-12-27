@@ -14,7 +14,7 @@ class NormalImageSerializer(serializers.ModelSerializer):
 
 class BASerializer(serializers.ModelSerializer):
     class Meta :
-        models = BAImage
+        model = BAImage
         fields = "__all__"
 
 class CatagoryImageSerializer(serializers.ModelSerializer):

@@ -8,12 +8,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from accounts.services import generate_token
 import os
+from django.core.paginator import Paginator
 
 
 class MakeUpArtistDetailView(GenericMethodsMixin, APIView):
       model = MakeUpArtist
       serializer_class = MakeUpArtistSerializer
       lookup_field = "id"
+
+      def get(self,request,*args, **kwargs):
+            all_data = MakeUpArtist.objects.all()
+            paginator = Paginator(all_data,6)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
+            serializer= MakeUpArtistSerializer(data,many=True)
+            return Response(data=serializer.data,status=status.HTTP_200_OK)
 
       def post(self,request,*args, **kwargs):
             serializer = MakeUpArtistSerializer(data=request.data)
@@ -54,10 +63,19 @@ class NormalImageAPI(GenericMethodsMixin, APIView):
       serializer_class = NormalImageSerializer
       lookup_field = "id"
 
+      def get(self,request,*args, **kwargs):
+            all_data = NormalImage.objects.all()
+            paginator = Paginator(all_data,6)
+            page_number = request.GET.get('page')
+            data = paginator.get_page(page_number)
+            serializer= NormalImageSerializer(data,many=True)
+            return Response({"error" :False,"data":serializer.data},status=status.HTTP_200_OK)
+
+
 
 class BAImageAPI(GenericMethodsMixin,APIView):
       model = BAImage
-      seriallizer_class = BASerializer
+      serializer_class = BASerializer
       lookup_field = "id"
 
 class CatagoryImageAPI(GenericMethodsMixin,APIView):

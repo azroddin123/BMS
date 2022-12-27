@@ -16,7 +16,7 @@ class NormalImage(models.Model):
     image         = models.ImageField()
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
-    pass
+
 
 class BAImage(models.Model):
     before_image   = models.ImageField()
@@ -24,7 +24,7 @@ class BAImage(models.Model):
     uploaded_by    = models.CharField(max_length=256,blank=True,null=True)
     created_at     = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
-    pass
+   
 
 class CatagoryImage(models.Model):
     image          = models.ImageField()
@@ -32,4 +32,4 @@ class CatagoryImage(models.Model):
     catagory_name  = models.CharField(max_length=200)
     created_at     = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
-    pass
+   
